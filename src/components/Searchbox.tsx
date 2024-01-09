@@ -32,9 +32,10 @@ type SearchboxProps = {
   placeholder?: string;
   onChange?: (value: string) => void;
   loading?: boolean;
+  className?: string;
 };
 
-const Searchbox = ({ value, placeholder, onChange, loading }: SearchboxProps): JSX.Element => {
+const Searchbox = ({ className, value, placeholder, onChange, loading }: SearchboxProps): JSX.Element => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     if (onChange) {
       onChange(e.target.value);
@@ -42,7 +43,7 @@ const Searchbox = ({ value, placeholder, onChange, loading }: SearchboxProps): J
   };
 
   return (
-    <Container>
+    <Container className={className}>
       <Icon src={searchIcon} />
       <Input value={value} placeholder={placeholder} onChange={handleChange} />
       {loading && <Loader size={20} />}

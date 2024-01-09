@@ -1,7 +1,7 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Home from './components/pages/Home';
 import Root from './components/pages/Root';
-import { createGlobalStyle } from 'styled-components';
+import { ThemeProvider, createGlobalStyle } from 'styled-components';
 
 const App = (): JSX.Element => {
   const GlobalStyle = createGlobalStyle`
@@ -30,6 +30,14 @@ const App = (): JSX.Element => {
     }
   `;
 
+  const theme = {
+    breakpoints: {
+      s: 576,
+      m: 768,
+      l: 992,
+    },
+  };
+
   const router = createBrowserRouter([
     {
       path: '/',
@@ -41,7 +49,9 @@ const App = (): JSX.Element => {
   return (
     <>
       <GlobalStyle />
-      <RouterProvider router={router} />
+      <ThemeProvider theme={theme}>
+        <RouterProvider router={router} />
+      </ThemeProvider>
     </>
   );
 };

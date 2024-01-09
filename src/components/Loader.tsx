@@ -13,7 +13,7 @@ const rotate = keyframes`
 const StyledLoader = styled.div<{ $size?: number }>`
   width: ${(props): string => `${props.$size}px`};
   height: ${(props): string => `${props.$size}px`};
-  border: solid 3px black;
+  border: solid 3px ${(props): string => props.theme.palette.text};
   border-radius: 50%;
   border-right-color: transparent;
   border-bottom-color: transparent;

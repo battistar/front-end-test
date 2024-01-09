@@ -7,8 +7,18 @@ import ThumbnailGrid from '../ThumbnailGrid';
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 20px;
   padding: 20px;
+`;
+
+const StyledSearchbox = styled(Searchbox)`
+  width: 100%;
+  max-width: 500px;
+`;
+
+const StyledThumbnailGrid = styled(ThumbnailGrid)`
+  max-width: 1200px;
 `;
 
 const Home = (): JSX.Element => {
@@ -23,8 +33,13 @@ const Home = (): JSX.Element => {
 
   return (
     <Container>
-      <Searchbox placeholder="Search..." value={searchText} onChange={handleChange} loading={status === 'loading'} />
-      {thumbnails && <ThumbnailGrid thumbnails={thumbnails} />}
+      <StyledSearchbox
+        placeholder="Search..."
+        value={searchText}
+        onChange={handleChange}
+        loading={status === 'loading'}
+      />
+      {thumbnails && <StyledThumbnailGrid thumbnails={thumbnails} />}
     </Container>
   );
 };

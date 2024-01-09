@@ -1,14 +1,19 @@
 import styled from 'styled-components';
 import searchIcon from '../assets/icon-search.png';
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useRef } from 'react';
 import Loader from './Loader';
 
 const Container = styled.div`
   display: flex;
   align-items: center;
-  border: 1px solid black;
+  border: 2px solid ${(props): string => props.theme.palette.action.selected};
   border-radius: 100vmax;
   padding: 10px 15px;
+
+  &:hover {
+    border-color: ${(props): string => props.theme.palette.action.hover};
+    cursor: text;
+  }
 `;
 
 const Input = styled.input`
@@ -16,6 +21,7 @@ const Input = styled.input`
   border: none;
   font-size: 1.1rem;
   margin: 0 10px;
+  background-color: ${(props): string => props.theme.palette.background};
 
   &:focus {
     outline: none;
@@ -23,8 +29,8 @@ const Input = styled.input`
 `;
 
 const Icon = styled.img`
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 25px;
 `;
 
 type SearchboxProps = {
@@ -36,16 +42,24 @@ type SearchboxProps = {
 };
 
 const Searchbox = ({ className, value, placeholder, onChange, loading }: SearchboxProps): JSX.Element => {
+  const inputRef = useRef<HTMLInputElement>(null);
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     if (onChange) {
       onChange(e.target.value);
     }
   };
 
+  const handleClick = (): void => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  };
+
   return (
-    <Container className={className}>
+    <Container className={className} onClick={handleClick}>
       <Icon src={searchIcon} />
-      <Input value={value} placeholder={placeholder} onChange={handleChange} />
+      <Input ref={inputRef} value={value} placeholder={placeholder} onChange={handleChange} />
       {loading && <Loader size={20} />}
     </Container>
   );

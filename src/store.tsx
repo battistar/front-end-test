@@ -1,6 +1,5 @@
 import { ReactNode, createContext, useCallback, useContext, useReducer } from 'react';
 import * as httpClient from './http/client';
-import _ from 'lodash';
 
 type Thumbnail = {
   title: string;
@@ -63,41 +62,32 @@ const useThumbnailSource = (): {
     initialState,
   );
 
-  const fetchThumbnails = useCallback(async (searchText: string, next?: string, debounce?: boolean): Promise<void> => {
-    const fetchData = async (): Promise<void> => {
-      let response;
-      if (next) {
-        response = await httpClient.fetchThumbnails(searchText);
-      } else {
-        response = await httpClient.fetchThumbnails(searchText, next);
-      }
-
-      if (httpClient.isError(response)) {
-        dispatch({ type: 'SET_STATUS', payload: 'error' });
-        dispatch({ type: 'SET_ERROR', payload: { statusCode: response.status, description: response.statusText } });
-      } else {
-        const thumbnails = response.data.children.map((child) => {
-          return {
-            title: child.data.title,
-            width: child.data.thumbnail_width,
-            height: child.data.thumbnail_height,
-            url: child.data.thumbnail,
-          };
-        });
-
-        dispatch({ type: 'SET_STATUS', payload: 'completed' });
-        dispatch({ type: 'SET_NEXT', payload: response.data.after });
-        dispatch({ type: 'SET_THUMBNAIL_LIST', payload: thumbnails });
-      }
-    };
-
-    const debouncedFetchData = _.debounce(fetchData, debounce ? 0 : 500);
-
+  const fetchThumbnails = useCallback(async (searchText: string, next?: string): Promise<void> => {
     dispatch({ type: 'SET_STATUS', payload: 'loading' });
-    debouncedFetchData();
+
+    const response = await httpClient.fetchThumbnails(searchText, next);
+
+    if (httpClient.isError(response)) {
+      dispatch({ type: 'SET_STATUS', payload: 'error' });
+      dispatch({ type: 'SET_ERROR', payload: { statusCode: response.status, description: response.statusText } });
+    } else {
+      const thumbnails = response.data.children.map((child) => {
+        return {
+          title: child.data.title,
+          width: child.data.thumbnail_width,
+          height: child.data.thumbnail_height,
+          url: child.data.thumbnail,
+        };
+      });
+
+      dispatch({ type: 'SET_STATUS', payload: 'completed' });
+      dispatch({ type: 'SET_NEXT', payload: response.data.after });
+      dispatch({ type: 'SET_THUMBNAIL_LIST', payload: thumbnails });
+    }
   }, []);
 
   const changeSearchText = useCallback((text: string): void => {
+    dispatch({ type: 'SET_STATUS', payload: 'loading' });
     dispatch({ type: 'CHANGE_SEARCH_TEXT', payload: text });
   }, []);
 

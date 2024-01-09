@@ -2,7 +2,7 @@ import { ReactNode, createContext, useCallback, useContext, useEffect, useMemo, 
 import * as httpClient from './http/client';
 import _ from 'lodash';
 
-type Thumbnail = {
+export type Thumbnail = {
   title: string;
   width: number;
   height: number;

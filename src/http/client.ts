@@ -1,6 +1,6 @@
 import path from 'path';
 
-const BASE_URL = 'https://www.reddit.com/r/';
+const BASE_URL = 'https://www.reddit.com/';
 
 type Thumbnails = {
   data: {
@@ -23,7 +23,7 @@ type Error = {
 
 export const fetchThumbnails = async (searchText: string, next?: string): Promise<Thumbnails | Error> => {
   const url = new URL(BASE_URL);
-  const pathname = path.join(searchText, 'top.json');
+  const pathname = path.join('r', searchText, 'top.json');
   url.pathname = pathname;
 
   if (next) {

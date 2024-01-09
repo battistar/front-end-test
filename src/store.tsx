@@ -1,5 +1,6 @@
-import { ReactNode, createContext, useCallback, useContext, useReducer } from 'react';
+import { ReactNode, createContext, useCallback, useContext, useEffect, useMemo, useReducer } from 'react';
 import * as httpClient from './http/client';
+import _ from 'lodash';
 
 type Thumbnail = {
   title: string;
@@ -21,7 +22,7 @@ type ThumbnailState = {
 };
 
 type ThumbnailActions =
-  | { type: 'SET_THUMBNAIL_LIST'; payload: Thumbnail[] }
+  | { type: 'SET_THUMBNAILS'; payload: Thumbnail[] }
   | { type: 'SET_NEXT'; payload: string }
   | { type: 'CHANGE_SEARCH_TEXT'; payload: string }
   | { type: 'SET_STATUS'; payload: Status }
@@ -37,7 +38,6 @@ const initialState: ThumbnailState = {
 
 const useThumbnailSource = (): {
   thumbnails: Thumbnail[] | null;
-  fetchThumbnails: (searchText: string, next?: string) => void;
   searchText: string;
   changeSearchText: (text: string) => void;
   next: string | null;
@@ -47,8 +47,8 @@ const useThumbnailSource = (): {
   const [{ thumbnails, searchText, next, status, error }, dispatch] = useReducer(
     (state: ThumbnailState, action: ThumbnailActions) => {
       switch (action.type) {
-        case 'SET_THUMBNAIL_LIST':
-          return { ...state, thumbnailList: action.payload };
+        case 'SET_THUMBNAILS':
+          return { ...state, thumbnails: action.payload };
         case 'SET_NEXT':
           return { ...state, next: action.payload };
         case 'CHANGE_SEARCH_TEXT':
@@ -62,9 +62,7 @@ const useThumbnailSource = (): {
     initialState,
   );
 
-  const fetchThumbnails = useCallback(async (searchText: string, next?: string): Promise<void> => {
-    dispatch({ type: 'SET_STATUS', payload: 'loading' });
-
+  const fetchData = useCallback(async (searchText: string, next?: string): Promise<void> => {
     const response = await httpClient.fetchThumbnails(searchText, next);
 
     if (httpClient.isError(response)) {
@@ -82,16 +80,26 @@ const useThumbnailSource = (): {
 
       dispatch({ type: 'SET_STATUS', payload: 'completed' });
       dispatch({ type: 'SET_NEXT', payload: response.data.after });
-      dispatch({ type: 'SET_THUMBNAIL_LIST', payload: thumbnails });
+      dispatch({ type: 'SET_THUMBNAILS', payload: thumbnails });
     }
   }, []);
 
+  const debouncedFetchThumbnails = useMemo(() => {
+    return _.debounce(fetchData, 500);
+  }, [fetchData]);
+
+  useEffect(() => {
+    if (searchText) {
+      dispatch({ type: 'SET_STATUS', payload: 'loading' });
+      debouncedFetchThumbnails(searchText);
+    }
+  }, [searchText, debouncedFetchThumbnails]);
+
   const changeSearchText = useCallback((text: string): void => {
-    dispatch({ type: 'SET_STATUS', payload: 'loading' });
     dispatch({ type: 'CHANGE_SEARCH_TEXT', payload: text });
   }, []);
 
-  return { thumbnails, fetchThumbnails, searchText, changeSearchText, next, status, error };
+  return { thumbnails, searchText, changeSearchText, next, status, error };
 };
 
 const ThumbnailContext = createContext<ReturnType<typeof useThumbnailSource>>(

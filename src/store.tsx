@@ -1,6 +1,7 @@
 import { ReactNode, createContext, useCallback, useContext, useEffect, useMemo, useReducer } from 'react';
-import { fetchThumbnails, ClientError, ClientResponse, isClientError } from './http/client';
+import { fetchThumbnails, isClientError } from './http/client';
 import _ from 'lodash';
+import { mapClientError, mapClientResponse } from './utils/data';
 
 export type Thumbnail = {
   id: string;
@@ -10,7 +11,7 @@ export type Thumbnail = {
   url: string;
 };
 
-type NetworkError = { statusCode: number; description: string };
+export type NetworkError = { statusCode: number; description: string };
 
 type Status = 'idle' | 'loading' | 'completed' | 'error';
 
@@ -24,7 +25,7 @@ type ThumbnailState = {
 
 type ThumbnailActions =
   | { type: 'SET_THUMBNAILS'; payload: { thumbnails: Thumbnail[]; append: boolean } }
-  | { type: 'SET_NEXT'; payload: string }
+  | { type: 'SET_NEXT'; payload: string | null }
   | { type: 'CHANGE_SEARCH_TEXT'; payload: string }
   | { type: 'SET_STATUS'; payload: Status }
   | { type: 'SET_ERROR'; payload: NetworkError | null };
@@ -68,44 +69,23 @@ const useThumbnailSource = (): {
     initialState,
   );
 
-  const mapClientResponse = useCallback((response: ClientResponse) => {
-    const thumbnails = response.data.children.map((child) => {
-      return {
-        id: child.data.name,
-        title: child.data.title,
-        width: child.data.thumbnail_width,
-        height: child.data.thumbnail_height,
-        url: child.data.thumbnail,
-      };
-    });
+  const fetch = useCallback(async (searchText: string): Promise<void> => {
+    dispatch({ type: 'SET_STATUS', payload: 'loading' });
+    dispatch({ type: 'SET_ERROR', payload: null });
 
-    return { thumbnails: thumbnails, next: response.data.after };
+    const response = await fetchThumbnails(searchText);
+
+    if (isClientError(response)) {
+      dispatch({ type: 'SET_STATUS', payload: 'error' });
+      dispatch({ type: 'SET_ERROR', payload: mapClientError(response) });
+    } else {
+      const mappedResponse = mapClientResponse(response);
+
+      dispatch({ type: 'SET_STATUS', payload: 'completed' });
+      dispatch({ type: 'SET_NEXT', payload: mappedResponse.next });
+      dispatch({ type: 'SET_THUMBNAILS', payload: { thumbnails: mappedResponse.thumbnails, append: false } });
+    }
   }, []);
-
-  const mapClientError = useCallback((response: ClientError) => {
-    return { statusCode: response.status, description: response.statusText };
-  }, []);
-
-  const fetch = useCallback(
-    async (searchText: string): Promise<void> => {
-      dispatch({ type: 'SET_STATUS', payload: 'loading' });
-      dispatch({ type: 'SET_ERROR', payload: null });
-
-      const response = await fetchThumbnails(searchText);
-
-      if (isClientError(response)) {
-        dispatch({ type: 'SET_STATUS', payload: 'error' });
-        dispatch({ type: 'SET_ERROR', payload: mapClientError(response) });
-      } else {
-        const mappedResponse = mapClientResponse(response);
-
-        dispatch({ type: 'SET_STATUS', payload: 'completed' });
-        dispatch({ type: 'SET_NEXT', payload: mappedResponse.next });
-        dispatch({ type: 'SET_THUMBNAILS', payload: { thumbnails: mappedResponse.thumbnails, append: false } });
-      }
-    },
-    [mapClientError, mapClientResponse],
-  );
 
   const fetchNext = useCallback(async (): Promise<void> => {
     if (!next || !searchText) {
@@ -127,7 +107,7 @@ const useThumbnailSource = (): {
       dispatch({ type: 'SET_NEXT', payload: mappedResponse.next });
       dispatch({ type: 'SET_THUMBNAILS', payload: { thumbnails: mappedResponse.thumbnails, append: true } });
     }
-  }, [mapClientError, mapClientResponse, next, searchText]);
+  }, [next, searchText]);
 
   const debouncedFetchData = useMemo(() => {
     return _.debounce(fetch, 500);

@@ -3,8 +3,10 @@ import Searchbox from '../Searchbox';
 import { useThumbnail } from '../../store';
 import { useCallback } from 'react';
 import ThumbnailGrid from '../ThumbnailGrid';
+import Message from '../Message';
 
 const Container = styled.div`
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -22,7 +24,7 @@ const StyledThumbnailGrid = styled(ThumbnailGrid)`
 `;
 
 const Home = (): JSX.Element => {
-  const { thumbnails, fetchNext, searchText, changeSearchText, status, next } = useThumbnail();
+  const { thumbnails, fetchNext, searchText, changeSearchText, status, next, error } = useThumbnail();
 
   const handleChange = useCallback(
     (value: string) => {
@@ -45,12 +47,15 @@ const Home = (): JSX.Element => {
         onChange={handleChange}
         loading={status === 'loading'}
       />
-      {thumbnails && (
+      {status !== 'error' && thumbnails && (
         <StyledThumbnailGrid
           thumbnails={thumbnails}
           onScrollEnd={handleScrollEnd}
           loading={status === 'loading' && next !== null}
         />
+      )}
+      {status === 'error' && (
+        <Message text={error && error.statusCode === 404 ? 'Data not found' : 'Oops! Something was wrong'} />
       )}
     </Container>
   );

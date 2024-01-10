@@ -5,6 +5,7 @@ const GlobalStyle = createGlobalStyle`
   html {
     box-sizing: border-box;
     font-size: 16px;
+    font-family: Helvetica, sans-serif;
   }
 
   *, *:before, *:after {

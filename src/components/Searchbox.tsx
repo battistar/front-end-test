@@ -21,7 +21,6 @@ const Input = styled.input`
   border: none;
   font-size: 1.1rem;
   margin: 0 10px;
-  background-color: ${(props): string => props.theme.palette.background};
 
   &:focus {
     outline: none;

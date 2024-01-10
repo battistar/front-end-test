@@ -3,6 +3,7 @@ import Home from './components/pages/Home';
 import Root from './components/pages/Root';
 import { ThemeProvider } from 'styled-components';
 import { ThumbnailProvider } from './store';
+import Error from './components/pages/Error';
 
 const App = (): JSX.Element => {
   const theme = {
@@ -24,6 +25,7 @@ const App = (): JSX.Element => {
     {
       path: '/',
       element: <Root />,
+      errorElement: <Error />,
       children: [{ index: true, element: <Home /> }],
     },
   ]);

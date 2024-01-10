@@ -39,7 +39,7 @@ const initialState: ThumbnailState = {
 };
 
 const useThumbnailSource = (): {
-  thumbnails: Thumbnail[] | null;
+  thumbnails: Thumbnail[];
   fetchNext: () => Promise<void>;
   searchText: string;
   changeSearchText: (text: string) => void;

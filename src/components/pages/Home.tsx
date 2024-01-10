@@ -47,7 +47,7 @@ const Home = (): JSX.Element => {
         onChange={handleChange}
         loading={status === 'loading'}
       />
-      {status !== 'error' && thumbnails && (
+      {status !== 'error' && thumbnails.length > 0 && (
         <StyledThumbnailGrid
           thumbnails={thumbnails}
           onScrollEnd={handleScrollEnd}

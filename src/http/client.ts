@@ -7,6 +7,7 @@ type Thumbnails = {
     after: string;
     children: {
       data: {
+        name: string;
         title: string;
         thumbnail_width: number;
         thumbnail_height: number;

@@ -3,6 +3,7 @@ import * as httpClient from './http/client';
 import _ from 'lodash';
 
 export type Thumbnail = {
+  id: string;
   title: string;
   width: number;
   height: number;
@@ -71,6 +72,7 @@ const useThumbnailSource = (): {
     } else {
       const thumbnails = response.data.children.map((child) => {
         return {
+          id: child.data.name,
           title: child.data.title,
           width: child.data.thumbnail_width,
           height: child.data.thumbnail_height,

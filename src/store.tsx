@@ -39,7 +39,7 @@ const initialState: ThumbnailState = {
 
 const useThumbnailSource = (): {
   thumbnails: Thumbnail[] | null;
-  fetchNext: (searchText: string, next: string | null) => Promise<void>;
+  fetchNext: () => Promise<void>;
   searchText: string;
   changeSearchText: (text: string) => void;
   next: string | null;
@@ -107,30 +107,27 @@ const useThumbnailSource = (): {
     [mapClientError, mapClientResponse],
   );
 
-  const fetchNext = useCallback(
-    async (searchText: string, next: string | null): Promise<void> => {
-      if (!next) {
-        return;
-      }
+  const fetchNext = useCallback(async (): Promise<void> => {
+    if (!next || !searchText) {
+      return;
+    }
 
-      dispatch({ type: 'SET_STATUS', payload: 'loading' });
-      dispatch({ type: 'SET_ERROR', payload: null });
+    dispatch({ type: 'SET_STATUS', payload: 'loading' });
+    dispatch({ type: 'SET_ERROR', payload: null });
 
-      const response = await fetchThumbnails(searchText, next);
+    const response = await fetchThumbnails(searchText, next);
 
-      if (isClientError(response)) {
-        dispatch({ type: 'SET_STATUS', payload: 'error' });
-        dispatch({ type: 'SET_ERROR', payload: mapClientError(response) });
-      } else {
-        const mappedResponse = mapClientResponse(response);
+    if (isClientError(response)) {
+      dispatch({ type: 'SET_STATUS', payload: 'error' });
+      dispatch({ type: 'SET_ERROR', payload: mapClientError(response) });
+    } else {
+      const mappedResponse = mapClientResponse(response);
 
-        dispatch({ type: 'SET_STATUS', payload: 'completed' });
-        dispatch({ type: 'SET_NEXT', payload: mappedResponse.next });
-        dispatch({ type: 'SET_THUMBNAILS', payload: { thumbnails: mappedResponse.thumbnails, append: true } });
-      }
-    },
-    [mapClientError, mapClientResponse],
-  );
+      dispatch({ type: 'SET_STATUS', payload: 'completed' });
+      dispatch({ type: 'SET_NEXT', payload: mappedResponse.next });
+      dispatch({ type: 'SET_THUMBNAILS', payload: { thumbnails: mappedResponse.thumbnails, append: true } });
+    }
+  }, [mapClientError, mapClientResponse, next, searchText]);
 
   const debouncedFetchData = useMemo(() => {
     return _.debounce(fetch, 500);

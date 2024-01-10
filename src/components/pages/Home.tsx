@@ -3,6 +3,7 @@ import Searchbox from '../Searchbox';
 import { useThumbnail } from '../../store';
 import { useCallback } from 'react';
 import ThumbnailGrid from '../ThumbnailGrid';
+import useScrolling from '../../hooks/useScrolling';
 
 const Container = styled.div`
   display: flex;
@@ -22,7 +23,12 @@ const StyledThumbnailGrid = styled(ThumbnailGrid)`
 `;
 
 const Home = (): JSX.Element => {
-  const { thumbnails, searchText, changeSearchText, status } = useThumbnail();
+  const { thumbnails, fetchNext, searchText, next, changeSearchText, status } = useThumbnail();
+  const { end } = useScrolling();
+
+  if (end && status !== 'loading') {
+    fetchNext(searchText, next);
+  }
 
   const handleChange = useCallback(
     (value: string) => {
@@ -39,7 +45,7 @@ const Home = (): JSX.Element => {
         onChange={handleChange}
         loading={status === 'loading'}
       />
-      {thumbnails && <StyledThumbnailGrid thumbnails={thumbnails} />}
+      {thumbnails && <StyledThumbnailGrid thumbnails={thumbnails} loading={status === 'loading' && next !== null} />}
     </Container>
   );
 };

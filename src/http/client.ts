@@ -2,7 +2,7 @@ import path from 'path';
 
 const BASE_URL = 'https://www.reddit.com/';
 
-type Thumbnails = {
+export type ClientResponse = {
   data: {
     after: string;
     children: {
@@ -17,12 +17,12 @@ type Thumbnails = {
   };
 };
 
-type Error = {
+export type ClientError = {
   status: number;
   statusText: string;
 };
 
-export const fetchThumbnails = async (searchText: string, next?: string): Promise<Thumbnails | Error> => {
+export const fetchThumbnails = async (searchText: string, next?: string): Promise<ClientResponse | ClientError> => {
   const url = new URL(BASE_URL);
   const pathname = path.join('r', searchText, 'top.json');
   url.pathname = pathname;
@@ -34,12 +34,12 @@ export const fetchThumbnails = async (searchText: string, next?: string): Promis
   const response = await fetch(url);
 
   if (response.status >= 200 && response.status < 300) {
-    return (await response.json()) as Thumbnails;
+    return (await response.json()) as ClientResponse;
   } else {
     return { status: response.status, statusText: response.statusText };
   }
 };
 
-export const isError = (response: Thumbnails | Error): response is Error => {
-  return (response as Error).status !== undefined;
+export const isClientError = (response: ClientResponse | ClientError): response is ClientError => {
+  return (response as ClientError).status !== undefined;
 };

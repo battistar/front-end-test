@@ -33,7 +33,7 @@ const Cell = styled.img`
 `;
 
 const LoaderContainer = styled.div`
-  height: 60px;
+  height: 55px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -47,7 +47,7 @@ const ThumbnailGrid = ({ className, thumbnails, loading }: ThumbnailGridProps): 
       return (
         <Column key={index}>
           {thumbnails.map((thumbnail) => {
-            return <Cell key={thumbnail.url} src={thumbnail.url} />;
+            return <Cell key={thumbnail.id} src={thumbnail.url} />;
           })}
         </Column>
       );

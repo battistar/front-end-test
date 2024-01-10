@@ -3,6 +3,7 @@ import styled from 'styled-components';
 type IconButtonProps = {
   icon: string;
   onClick?: () => void;
+  className?: string;
 };
 
 const Button = styled.button`
@@ -27,7 +28,7 @@ const Icon = styled.img`
   height: 20px;
 `;
 
-const IconButton = ({ icon, onClick }: IconButtonProps): JSX.Element => {
+const IconButton = ({ className, icon, onClick }: IconButtonProps): JSX.Element => {
   const handleClick = (): void => {
     if (onClick) {
       onClick();
@@ -35,7 +36,7 @@ const IconButton = ({ icon, onClick }: IconButtonProps): JSX.Element => {
   };
 
   return (
-    <Button onClick={handleClick}>
+    <Button className={className} onClick={handleClick}>
       <Icon src={icon} />
     </Button>
   );

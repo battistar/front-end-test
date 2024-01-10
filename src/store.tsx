@@ -5,10 +5,10 @@ import { mapClientError, mapClientResponse } from './utils/data';
 
 export type Thumbnail = {
   id: string;
-  title: string;
   width: number;
   height: number;
   url: string;
+  favorite: boolean;
 };
 
 export type NetworkError = { statusCode: number; description: string };
@@ -27,6 +27,7 @@ type ThumbnailActions =
   | { type: 'SET_THUMBNAILS'; payload: { thumbnails: Thumbnail[]; append: boolean } }
   | { type: 'SET_NEXT'; payload: string | null }
   | { type: 'CHANGE_SEARCH_TEXT'; payload: string }
+  | { type: 'TOGGLE_FAVORITE'; payload: string }
   | { type: 'SET_STATUS'; payload: Status }
   | { type: 'SET_ERROR'; payload: NetworkError | null };
 
@@ -44,6 +45,8 @@ const useThumbnailSource = (): {
   searchText: string;
   changeSearchText: (text: string) => void;
   next: string | null;
+  favorites: Thumbnail[];
+  toggleFavorite: (id: string) => void;
   status: Status;
   error: NetworkError | null;
 } => {
@@ -60,6 +63,18 @@ const useThumbnailSource = (): {
           return { ...state, next: action.payload };
         case 'CHANGE_SEARCH_TEXT':
           return { ...state, searchText: action.payload };
+        case 'TOGGLE_FAVORITE': {
+          const thumbIndex = state.thumbnails.findIndex((thumbnail) => {
+            return thumbnail.id === action.payload;
+          });
+          const favorite = state.thumbnails[thumbIndex].favorite;
+          const thumb = { ...state.thumbnails[thumbIndex], favorite: !favorite };
+
+          const thumbList = [...state.thumbnails];
+          thumbList[thumbIndex] = thumb;
+
+          return { ...state, thumbnails: thumbList };
+        }
         case 'SET_STATUS':
           return { ...state, status: action.payload };
         case 'SET_ERROR':
@@ -124,7 +139,17 @@ const useThumbnailSource = (): {
     dispatch({ type: 'CHANGE_SEARCH_TEXT', payload: text });
   }, []);
 
-  return { thumbnails, fetchNext, searchText, changeSearchText, next, status, error };
+  const toggleFavorite = useCallback((id: string): void => {
+    dispatch({ type: 'TOGGLE_FAVORITE', payload: id });
+  }, []);
+
+  const favorites = useMemo(() => {
+    return thumbnails.filter((thumbnail) => {
+      return thumbnail.favorite;
+    });
+  }, [thumbnails]);
+
+  return { thumbnails, fetchNext, searchText, changeSearchText, next, favorites, toggleFavorite, status, error };
 };
 
 const ThumbnailContext = createContext<ReturnType<typeof useThumbnailSource>>(

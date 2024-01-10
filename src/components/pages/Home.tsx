@@ -34,7 +34,7 @@ const StyledThumbnailGrid = styled(ThumbnailGrid)`
 `;
 
 const Home = (): JSX.Element => {
-  const { thumbnails, fetchNext, searchText, changeSearchText, status, next, error } = useThumbnail();
+  const { thumbnails, fetchNext, searchText, changeSearchText, status, toggleFavorite, next, error } = useThumbnail();
   const navigate = useNavigate();
 
   const handleChangeSearchText = useCallback(
@@ -54,6 +54,13 @@ const Home = (): JSX.Element => {
     navigate('/favorites');
   }, [navigate]);
 
+  const handleThumbFavoriteClick = useCallback(
+    (id: string) => {
+      toggleFavorite(id);
+    },
+    [toggleFavorite],
+  );
+
   return (
     <Container>
       <ActionsContainer>
@@ -70,6 +77,7 @@ const Home = (): JSX.Element => {
           thumbnails={thumbnails}
           onScrollEnd={handleScrollEnd}
           loading={status === 'loading' && next !== null}
+          onFavoriteClick={handleThumbFavoriteClick}
         />
       )}
       {status === 'error' && (

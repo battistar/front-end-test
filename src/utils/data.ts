@@ -5,10 +5,10 @@ export const mapClientResponse = (response: ClientResponse): { thumbnails: Thumb
   const thumbnails = response.data.children.map((child) => {
     return {
       id: child.data.name,
-      title: child.data.title,
       width: child.data.thumbnail_width,
       height: child.data.thumbnail_height,
       url: child.data.thumbnail,
+      favorite: false,
     };
   });
 

@@ -4,6 +4,9 @@ import { useThumbnail } from '../../store';
 import { useCallback } from 'react';
 import ThumbnailGrid from '../ThumbnailGrid';
 import Message from '../Message';
+import heartIcon from '../../assets/icon-full-heart.png';
+import IconButton from '../IconButton';
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
   height: 100vh;
@@ -14,9 +17,16 @@ const Container = styled.div`
   padding: 20px;
 `;
 
-const StyledSearchbox = styled(Searchbox)`
+const ActionsContainer = styled.div`
   width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
   max-width: 500px;
+`;
+
+const StyledSearchbox = styled(Searchbox)`
+  flex: 1;
 `;
 
 const StyledThumbnailGrid = styled(ThumbnailGrid)`
@@ -25,8 +35,9 @@ const StyledThumbnailGrid = styled(ThumbnailGrid)`
 
 const Home = (): JSX.Element => {
   const { thumbnails, fetchNext, searchText, changeSearchText, status, next, error } = useThumbnail();
+  const navigate = useNavigate();
 
-  const handleChange = useCallback(
+  const handleChangeSearchText = useCallback(
     (value: string) => {
       changeSearchText(value);
     },
@@ -39,14 +50,21 @@ const Home = (): JSX.Element => {
     }
   }, [fetchNext, status]);
 
+  const handleFavoritesClick = useCallback(() => {
+    navigate('/favorites');
+  }, [navigate]);
+
   return (
     <Container>
-      <StyledSearchbox
-        placeholder="Search..."
-        value={searchText}
-        onChange={handleChange}
-        loading={status === 'loading'}
-      />
+      <ActionsContainer>
+        <StyledSearchbox
+          placeholder="Search..."
+          value={searchText}
+          onChange={handleChangeSearchText}
+          loading={status === 'loading'}
+        />
+        <IconButton icon={heartIcon} onClick={handleFavoritesClick} />
+      </ActionsContainer>
       {status !== 'error' && thumbnails.length > 0 && (
         <StyledThumbnailGrid
           thumbnails={thumbnails}

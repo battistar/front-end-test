@@ -4,6 +4,7 @@ import Root from './components/pages/Root';
 import { ThemeProvider } from 'styled-components';
 import { ThumbnailProvider } from './store';
 import Error from './components/pages/Error';
+import Favorites from './components/pages/Favorites';
 
 const App = (): JSX.Element => {
   const theme = {
@@ -26,7 +27,10 @@ const App = (): JSX.Element => {
       path: '/',
       element: <Root />,
       errorElement: <Error />,
-      children: [{ index: true, element: <Home /> }],
+      children: [
+        { index: true, element: <Home /> },
+        { path: 'favorites', element: <Favorites /> },
+      ],
     },
   ]);
 

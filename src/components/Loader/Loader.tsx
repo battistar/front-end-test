@@ -26,7 +26,7 @@ type LoaderProps = {
 };
 
 const Loader = ({ size = 40, className }: LoaderProps): JSX.Element => {
-  return <StyledLoader className={className} $size={size} />;
+  return <StyledLoader data-testid="loader" className={className} $size={size} />;
 };
 
 export default Loader;

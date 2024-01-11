@@ -1,4 +1,4 @@
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { RouterProvider, createHashRouter } from 'react-router-dom';
 import Home from './components/pages/Home/Home';
 import Root from './components/pages/Root';
 import { ThemeProvider } from 'styled-components';
@@ -8,7 +8,7 @@ import Favorites from './components/pages/Favorites/Favorites';
 import theme from './theme';
 
 const App = (): JSX.Element => {
-  const router = createBrowserRouter([
+  const router = createHashRouter([
     {
       path: '/',
       element: <Root />,

@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import ThumbnailGrid from '../ThumbnailGrid/ThumbnailGrid';
-import { useThumbnail } from '../../store';
+import ThumbnailGrid from '../../ThumbnailGrid/ThumbnailGrid';
+import { useThumbnail } from '../../../store';
 import { useCallback } from 'react';
-import Message from '../Message/Message';
+import Message from '../../Message/Message';
 
 const Container = styled.div`
   height: 100vh;

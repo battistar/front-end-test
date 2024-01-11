@@ -3,8 +3,8 @@ import Home from './components/pages/Home';
 import Root from './components/pages/Root';
 import { ThemeProvider } from 'styled-components';
 import { ThumbnailProvider } from './store';
-import Error from './components/pages/Error';
-import Favorites from './components/pages/Favorites';
+import Error from './components/pages/Error/Error';
+import Favorites from './components/pages/Favorites/Favorites';
 import theme from './theme';
 
 const App = (): JSX.Element => {

@@ -5,23 +5,9 @@ import { ThemeProvider } from 'styled-components';
 import { ThumbnailProvider } from './store';
 import Error from './components/pages/Error';
 import Favorites from './components/pages/Favorites';
+import theme from './theme';
 
 const App = (): JSX.Element => {
-  const theme = {
-    palette: {
-      text: '#fff',
-      background: '#121212',
-      action: {
-        hover: '#fff',
-        selected: '#868686',
-      },
-    },
-    breakpoints: {
-      tablet: 576,
-      desktop: 992,
-    },
-  };
-
   const router = createBrowserRouter([
     {
       path: '/',

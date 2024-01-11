@@ -4,7 +4,7 @@ import { Thumbnail } from '../store';
 import * as list from '../utils/list';
 import Loader from './Loader';
 import _ from 'lodash';
-import IconButton from './IconButton';
+import IconButton from './IconButton/IconButton';
 import heartFullIcon from '../assets/icon-full-heart.png';
 import heartEmptyIcon from '../assets/icon-empt-heart.png';
 

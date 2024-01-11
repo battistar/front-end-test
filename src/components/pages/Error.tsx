@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import GlobalStyle from '../GlobalStyle';
+import GlobalStyle from '../../GlobalStyle';
 
 const Container = styled.div`
   height: 100vh;

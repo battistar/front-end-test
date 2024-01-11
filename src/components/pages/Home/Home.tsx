@@ -1,11 +1,11 @@
 import styled from 'styled-components';
-import Searchbox from '../Searchbox/Searchbox';
-import { useThumbnail } from '../../store';
+import Searchbox from '../../Searchbox/Searchbox';
+import { useThumbnail } from '../../../store';
 import { useCallback } from 'react';
-import ThumbnailGrid from '../ThumbnailGrid/ThumbnailGrid';
-import Message from '../Message/Message';
-import heartIcon from '../../assets/icon-full-heart.png';
-import IconButton from '../IconButton/IconButton';
+import ThumbnailGrid from '../../ThumbnailGrid/ThumbnailGrid';
+import Message from '../../Message/Message';
+import heartIcon from '../../../assets/icon-full-heart.png';
+import IconButton from '../../IconButton/IconButton';
 import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`

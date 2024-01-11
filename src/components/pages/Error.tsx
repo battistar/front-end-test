@@ -10,12 +10,12 @@ const Container = styled.div`
   gap: 10px;
 `;
 
-const Title = styled.h2`
+const Title = styled.p`
   font-size: 2rem;
   margin: 0;
 `;
 
-const Meme = styled.h2`
+const Meme = styled.p`
   font-size: 3rem;
   margin: 0;
 `;

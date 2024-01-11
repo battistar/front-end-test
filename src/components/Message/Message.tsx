@@ -10,7 +10,7 @@ const Container = styled.div`
 const Message = ({ text }: { text: string }): JSX.Element => {
   return (
     <Container>
-      <h2>{text}</h2>
+      <p>{text}</p>
     </Container>
   );
 };

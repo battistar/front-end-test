@@ -3,7 +3,7 @@ import Searchbox from '../Searchbox';
 import { useThumbnail } from '../../store';
 import { useCallback } from 'react';
 import ThumbnailGrid from '../ThumbnailGrid';
-import Message from '../Message';
+import Message from '../Message/Message';
 import heartIcon from '../../assets/icon-full-heart.png';
 import IconButton from '../IconButton';
 import { useNavigate } from 'react-router-dom';

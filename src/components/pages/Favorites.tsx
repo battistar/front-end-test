@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import ThumbnailGrid from '../ThumbnailGrid';
+import ThumbnailGrid from '../ThumbnailGrid/ThumbnailGrid';
 import { useThumbnail } from '../../store';
 import { useCallback } from 'react';
 import Message from '../Message/Message';

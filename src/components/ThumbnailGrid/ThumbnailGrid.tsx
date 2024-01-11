@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
-import { Thumbnail } from '../store';
-import * as list from '../utils/list';
-import Loader from './Loader/Loader';
+import { Thumbnail } from '../../store';
+import * as list from '../../utils/list';
+import Loader from '../Loader/Loader';
 import _ from 'lodash';
-import IconButton from './IconButton/IconButton';
-import heartFullIcon from '../assets/icon-full-heart.png';
-import heartEmptyIcon from '../assets/icon-empt-heart.png';
+import IconButton from '../IconButton/IconButton';
+import heartFullIcon from '../../assets/icon-full-heart.png';
+import heartEmptyIcon from '../../assets/icon-empt-heart.png';
 
 type ThumbnailGridProps = {
   thumbnails: Thumbnail[];
@@ -108,10 +108,10 @@ const ThumbnailGrid = ({
 
     return chunks.map((thumbnails, index) => {
       return (
-        <Column key={index}>
+        <Column data-testid="column" key={index}>
           {thumbnails.map((thumbnail) => {
             return (
-              <Cell key={thumbnail.id}>
+              <Cell data-testid="cell" key={thumbnail.id}>
                 <CellOverlay>
                   {thumbnail.width}x{thumbnail.height}
                   <IconButton
@@ -119,7 +119,7 @@ const ThumbnailGrid = ({
                     onClick={handleFavoriteClick(thumbnail.id)}
                   />
                 </CellOverlay>
-                <Thumb src={thumbnail.url} />
+                <Thumb data-testid="thumb" src={thumbnail.url} />
               </Cell>
             );
           })}

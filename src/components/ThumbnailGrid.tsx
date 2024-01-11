@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
 import { Thumbnail } from '../store';
 import * as list from '../utils/list';
-import Loader from './Loader';
+import Loader from './Loader/Loader';
 import _ from 'lodash';
 import IconButton from './IconButton/IconButton';
 import heartFullIcon from '../assets/icon-full-heart.png';

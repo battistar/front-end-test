@@ -8,6 +8,10 @@ export default ({ mode }) => {
 
   return defineConfig({
     plugins: [react(), nodePolyfills()],
+    test: {
+      globals: true,
+      environment: 'jsdom',
+    },
     server: {
       watch: {
         usePolling: true,

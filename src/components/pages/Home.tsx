@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Searchbox from '../Searchbox';
+import Searchbox from '../Searchbox/Searchbox';
 import { useThumbnail } from '../../store';
 import { useCallback } from 'react';
 import ThumbnailGrid from '../ThumbnailGrid';

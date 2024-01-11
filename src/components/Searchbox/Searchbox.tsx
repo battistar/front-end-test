@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import searchIcon from '../assets/icon-search.png';
+import searchIcon from '../../assets/icon-search.png';
 import { ChangeEvent, useRef } from 'react';
-import Loader from './Loader/Loader';
+import Loader from '../Loader/Loader';
 
 const Container = styled.div`
   display: flex;

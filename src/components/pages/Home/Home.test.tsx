@@ -53,9 +53,7 @@ describe('Home', () => {
     expect(searchElement).toBeDefined();
     expect(buttonElement).toBeDefined();
   });
-});
 
-describe('Home', () => {
   test('should render page with some favorites', () => {
     vi.spyOn(store, 'useThumbnail').mockImplementation(() => {
       return {

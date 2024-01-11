@@ -30,9 +30,7 @@ describe('Favorites', () => {
     expect(titleElement).toBeDefined();
     expect(notFoundElement).toBeDefined();
   });
-});
 
-describe('Favorites', () => {
   test('should render page with some favorites', () => {
     vi.spyOn(store, 'useThumbnail').mockImplementation(() => {
       return {

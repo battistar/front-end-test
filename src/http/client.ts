@@ -24,12 +24,16 @@ export type ClientError = {
 
 export const fetchThumbnails = async (searchText: string, next?: string): Promise<ClientResponse | ClientError> => {
   const url = new URL(BASE_URL);
+
   const pathname = path.join('r', searchText, 'top.json');
   url.pathname = pathname;
 
+  const searchParams = new URLSearchParams();
+  searchParams.append('raw_json', '1');
   if (next) {
-    url.search = new URLSearchParams({ after: next }).toString();
+    searchParams.append('after', next);
   }
+  url.search = searchParams.toString();
 
   const response = await fetch(url);
 

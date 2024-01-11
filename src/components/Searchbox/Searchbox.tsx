@@ -5,7 +5,9 @@ import Loader from '../Loader/Loader';
 
 const Container = styled.div`
   display: flex;
+  justify-content: space-between;
   align-items: center;
+  gap: 10px;
   border: 2px solid ${(props): string => props.theme.palette.input.selected};
   border-radius: 100vmax;
   padding: 10px 15px;
@@ -17,10 +19,10 @@ const Container = styled.div`
 `;
 
 const Input = styled.input`
+  width: 0;
   flex: 1;
   border: none;
   font-size: 1.1rem;
-  margin: 0 10px;
 
   &:focus {
     outline: none;
@@ -30,6 +32,14 @@ const Input = styled.input`
 const Icon = styled.img`
   width: 25px;
   height: 25px;
+`;
+
+const LoaderContainer = styled.div`
+  width: 25px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 type SearchboxProps = {
@@ -59,7 +69,7 @@ const Searchbox = ({ className, value, placeholder, onChange, loading }: Searchb
     <Container className={className} onClick={handleClick}>
       <Icon src={searchIcon} />
       <Input ref={inputRef} value={value} placeholder={placeholder} onChange={handleChange} />
-      {loading && <Loader size={20} />}
+      <LoaderContainer>{loading && <Loader size={20} />}</LoaderContainer>
     </Container>
   );
 };

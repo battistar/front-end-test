@@ -5,6 +5,7 @@ import Loader from './Loader';
 describe('Loader', () => {
   test('should render element', () => {
     const { container } = render(<Loader />);
+
     expect(container).toBeDefined();
   });
 });

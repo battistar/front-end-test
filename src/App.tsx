@@ -21,13 +21,11 @@ const App = (): JSX.Element => {
   ]);
 
   return (
-    <>
-      <ThemeProvider theme={theme}>
-        <ThumbnailProvider>
-          <RouterProvider router={router} />
-        </ThumbnailProvider>
-      </ThemeProvider>
-    </>
+    <ThemeProvider theme={theme}>
+      <ThumbnailProvider>
+        <RouterProvider router={router} />
+      </ThumbnailProvider>
+    </ThemeProvider>
   );
 };
 

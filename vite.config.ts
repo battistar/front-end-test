@@ -20,5 +20,6 @@ export default ({ mode }) => {
       strictPort: true,
       host: true,
     },
+    base: '/front-end-test',
   });
 };

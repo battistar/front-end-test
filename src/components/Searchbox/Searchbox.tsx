@@ -6,12 +6,12 @@ import Loader from '../Loader/Loader';
 const Container = styled.div`
   display: flex;
   align-items: center;
-  border: 2px solid ${(props): string => props.theme.palette.action.selected};
+  border: 2px solid ${(props): string => props.theme.palette.input.selected};
   border-radius: 100vmax;
   padding: 10px 15px;
 
   &:hover {
-    border-color: ${(props): string => props.theme.palette.action.hover};
+    border-color: ${(props): string => props.theme.palette.input.hover};
     cursor: text;
   }
 `;

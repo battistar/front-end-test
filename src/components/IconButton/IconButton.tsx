@@ -14,12 +14,12 @@ const Button = styled.button`
   align-items: center;
   background: none;
   border: none;
-  background-color: ${(props): string => props.theme.palette.action.selected};
+  background-color: ${(props): string => props.theme.palette.button.selected};
   border-radius: 100vmax;
   cursor: pointer;
 
   &:hover {
-    background-color: ${(props): string => props.theme.palette.action.hover};
+    background-color: ${(props): string => props.theme.palette.button.hover};
   }
 `;
 

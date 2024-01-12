@@ -2,6 +2,7 @@ import { test, expect, describe, vi } from 'vitest';
 import { render, screen } from '../../../test-utils';
 import Favorites from './Favorites';
 import * as store from '../../../store';
+import { MemoryRouter } from 'react-router-dom';
 
 const thumbnails: store.Thumbnail[] = [
   {
@@ -20,9 +21,17 @@ const thumbnails: store.Thumbnail[] = [
   },
 ];
 
+const Wrapper = (): JSX.Element => {
+  return (
+    <MemoryRouter initialEntries={['/favorites']}>
+      <Favorites />
+    </MemoryRouter>
+  );
+};
+
 describe('Favorites', () => {
   test('should render page with no favorites', () => {
-    render(<Favorites />);
+    render(<Wrapper />);
 
     const titleElement = screen.getByText('Favorites');
     const notFoundElement = screen.getByText('No favorites found');
@@ -46,7 +55,7 @@ describe('Favorites', () => {
       };
     });
 
-    render(<Favorites />);
+    render(<Wrapper />);
 
     const thumbElementList = screen.getAllByTestId('cell');
 

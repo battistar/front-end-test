@@ -4,9 +4,7 @@ import { Thumbnail } from '../../store';
 import * as list from '../../utils/list';
 import Loader from '../Loader/Loader';
 import _ from 'lodash';
-import IconButton from '../IconButton/IconButton';
-import heartFullIcon from '../../assets/icon-full-heart.png';
-import heartEmptyIcon from '../../assets/icon-empt-heart.png';
+import ThumbnailCell from '../ThumbnailCell/ThumbnailCell';
 
 type ThumbnailGridProps = {
   thumbnails: Thumbnail[];
@@ -34,34 +32,6 @@ const Column = styled.div`
   }
 `;
 
-const Cell = styled.div`
-  position: relative;
-  padding: 0 5px 5px;
-`;
-
-const Thumb = styled.img`
-  width: 100%;
-`;
-
-const CellOverlay = styled.div`
-  position: absolute;
-  width: calc(100% - 10px);
-  height: calc(100% - 9px);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  font-size: 2rem;
-  background-color: rgb(0, 0, 0, 0.8);
-  opacity: 0;
-  transition: opacity 0.4s;
-
-  &:hover {
-    opacity: 1;
-  }
-`;
-
 const LoaderContainer = styled.div`
   height: 55px;
   display: flex;
@@ -77,7 +47,7 @@ const ThumbnailGrid = ({
   onFavoriteClick,
 }: ThumbnailGridProps): JSX.Element => {
   const handleFavoriteClick = useCallback(
-    (id: string) => () => {
+    (id: string) => {
       if (onFavoriteClick) {
         onFavoriteClick(id);
       }
@@ -110,18 +80,7 @@ const ThumbnailGrid = ({
       return (
         <Column data-testid="column" key={index}>
           {thumbnails.map((thumbnail) => {
-            return (
-              <Cell data-testid="cell" key={thumbnail.id}>
-                <CellOverlay>
-                  {thumbnail.width}x{thumbnail.height}
-                  <IconButton
-                    icon={thumbnail.favorite ? heartFullIcon : heartEmptyIcon}
-                    onClick={handleFavoriteClick(thumbnail.id)}
-                  />
-                </CellOverlay>
-                <Thumb data-testid="thumb" src={thumbnail.url} />
-              </Cell>
-            );
+            return <ThumbnailCell key={thumbnail.id} thumbnail={thumbnail} onFavoriteClick={handleFavoriteClick} />;
           })}
         </Column>
       );

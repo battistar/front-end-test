@@ -40,11 +40,9 @@ describe('ThumbnailGrid', () => {
 
     const columnElementList = screen.getAllByTestId('column');
     const cellElementList = screen.getAllByTestId('cell');
-    const thumbElementList = screen.getAllByTestId('thumb');
 
     expect(columnElementList.length).toBe(4);
     expect(cellElementList.length).toBe(4);
-    expect(thumbElementList.length).toBe(4);
   });
 
   test('should render grid element with loader', () => {

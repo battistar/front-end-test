@@ -54,7 +54,7 @@ describe('Home', () => {
     expect(buttonElement).toBeDefined();
   });
 
-  test('should render page with some favorites', () => {
+  test('should render page with some thumbnails', () => {
     vi.spyOn(store, 'useThumbnail').mockImplementation(() => {
       return {
         thumbnails: thumbnails,
@@ -73,7 +73,7 @@ describe('Home', () => {
 
     const searchElement = screen.getByPlaceholderText('Search...');
     const buttonElementList = screen.getAllByRole('button');
-    const thumbElementList = screen.getAllByTestId('thumb');
+    const thumbElementList = screen.getAllByTestId('cell');
 
     expect(searchElement).toBeDefined();
     expect(buttonElementList.length).toBe(5);

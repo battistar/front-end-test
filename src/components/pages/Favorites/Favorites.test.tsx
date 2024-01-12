@@ -48,7 +48,7 @@ describe('Favorites', () => {
 
     render(<Favorites />);
 
-    const thumbElementList = screen.getAllByTestId('thumb');
+    const thumbElementList = screen.getAllByTestId('cell');
 
     expect(thumbElementList.length).toBe(2);
   });

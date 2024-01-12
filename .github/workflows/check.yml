@@ -32,3 +32,6 @@ jobs:
 
       - name: Linter check
         run: npx eslint "src/**/*.{ts,tsx}"
+
+      - name: Test
+        run: npm run test

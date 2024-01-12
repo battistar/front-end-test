@@ -18,7 +18,7 @@ Start the application with command:
 ./run.sh start
 ```
 
-Then open your browser on [http://localhost:3000](http://localhost:3000) to use the app.
+Then open your browser on [http://localhost:3000/front-end-test](http://localhost:3000/front-end-test) to use the app.
 
 Teardown the environment with command:
 

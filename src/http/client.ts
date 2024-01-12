@@ -4,7 +4,7 @@ const BASE_URL = 'https://www.reddit.com/';
 
 export type ClientResponse = {
   data: {
-    after: string;
+    after: string | null;
     children: {
       data: {
         name: string;

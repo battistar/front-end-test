@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useCallback, useContext, useEffect, useMemo, useReducer } from 'react';
+import { ReactNode, createContext, useCallback, useContext, useMemo, useReducer } from 'react';
 import { fetchThumbnails, isClientError } from './http/client';
 import _ from 'lodash';
 import { mapClientError, mapClientResponse } from './utils/data';
@@ -128,16 +128,17 @@ const useThumbnailSource = (): {
     return _.debounce(fetch, 500);
   }, [fetch]);
 
-  useEffect(() => {
-    if (searchText) {
-      dispatch({ type: 'SET_STATUS', payload: 'loading' });
-      debouncedFetchData(searchText);
-    }
-  }, [searchText, debouncedFetchData]);
+  const changeSearchText = useCallback(
+    (text: string): void => {
+      dispatch({ type: 'CHANGE_SEARCH_TEXT', payload: text });
 
-  const changeSearchText = useCallback((text: string): void => {
-    dispatch({ type: 'CHANGE_SEARCH_TEXT', payload: text });
-  }, []);
+      if (text) {
+        dispatch({ type: 'SET_STATUS', payload: 'loading' });
+        debouncedFetchData(text);
+      }
+    },
+    [debouncedFetchData],
+  );
 
   const toggleFavorite = useCallback((id: string): void => {
     dispatch({ type: 'TOGGLE_FAVORITE', payload: id });

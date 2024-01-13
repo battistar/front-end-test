@@ -6,6 +6,8 @@ import Loader from '../Loader/Loader';
 import _ from 'lodash';
 import ThumbnailCell from '../ThumbnailCell/ThumbnailCell';
 
+const SCROLL_OFFSET = 200;
+
 type ThumbnailGridProps = {
   thumbnails: Thumbnail[];
   loading?: boolean;
@@ -58,7 +60,7 @@ const ThumbnailGrid = ({
   const handleScroll = useCallback((): void => {
     const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
 
-    if (onScrollEnd && scrollTop + clientHeight === scrollHeight) {
+    if (onScrollEnd && scrollTop + clientHeight >= scrollHeight - SCROLL_OFFSET) {
       onScrollEnd();
     }
   }, [onScrollEnd]);

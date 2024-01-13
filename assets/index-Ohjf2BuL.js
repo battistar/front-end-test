@@ -206,11 +206,11 @@ function print() { __p += __j.call(arguments, '') }
   margin: 10px 10px 0 0;
 `,zI=Fe.img`
   width: 100%;
-`,BI=({className:e,onFavoriteClick:t,thumbnail:n})=>{const i=()=>{t&&t(n.id)};return re.jsxs(NI,{"data-testid":"cell",className:e,children:[re.jsxs(MI,{children:[re.jsx(UI,{icon:n.favorite?oS:DI,onClick:i}),re.jsxs(FI,{children:[n.width,"x",n.height]})]}),re.jsx(zI,{src:n.url})]})},$I=Fe.div`
+`,BI=({className:e,onFavoriteClick:t,thumbnail:n})=>{const i=()=>{t&&t(n.id)};return re.jsxs(NI,{"data-testid":"cell",className:e,children:[re.jsxs(MI,{children:[re.jsx(UI,{icon:n.favorite?oS:DI,onClick:i}),re.jsxs(FI,{children:[n.width,"x",n.height]})]}),re.jsx(zI,{src:n.url})]})},$I=200,WI=Fe.div`
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-`,WI=Fe.div`
+`,jI=Fe.div`
   width: 100%;
 
   @media (min-width: ${e=>`${e.theme.breakpoints.tablet}px`}) {
@@ -220,34 +220,34 @@ function print() { __p += __j.call(arguments, '') }
   @media (min-width: ${e=>`${e.theme.breakpoints.desktop}px`}) {
     width: 25%;
   }
-`,jI=Fe.div`
+`,HI=Fe.div`
   height: 55px;
   display: flex;
   justify-content: center;
   align-items: center;
-`,uS=({className:e,thumbnails:t,loading:n,onScrollEnd:i,onFavoriteClick:o})=>{const u=j.useCallback(g=>{o&&o(g)},[o]),s=j.useCallback(()=>{const{scrollTop:g,clientHeight:m,scrollHeight:y}=document.documentElement;i&&g+m===y&&i()},[i]),c=rS.debounce(s,50);j.useEffect(()=>(window.addEventListener("scroll",c),()=>{window.removeEventListener("scroll",c)}),[c]);const d=j.useMemo(()=>LI(t,4).map((m,y)=>re.jsx(WI,{"data-testid":"column",children:m.map(_=>re.jsx(BI,{thumbnail:_,onFavoriteClick:u},_.id))},y)),[u,t]);return re.jsxs(re.Fragment,{children:[re.jsx($I,{className:e,children:d}),n&&re.jsx(jI,{children:re.jsx(nS,{size:30})})]})},HI=Fe.div`
+`,uS=({className:e,thumbnails:t,loading:n,onScrollEnd:i,onFavoriteClick:o})=>{const u=j.useCallback(g=>{o&&o(g)},[o]),s=j.useCallback(()=>{const{scrollTop:g,clientHeight:m,scrollHeight:y}=document.documentElement;i&&g+m>=y-$I&&i()},[i]),c=rS.debounce(s,50);j.useEffect(()=>(window.addEventListener("scroll",c),()=>{window.removeEventListener("scroll",c)}),[c]);const d=j.useMemo(()=>LI(t,4).map((m,y)=>re.jsx(jI,{"data-testid":"column",children:m.map(_=>re.jsx(BI,{thumbnail:_,onFavoriteClick:u},_.id))},y)),[u,t]);return re.jsxs(re.Fragment,{children:[re.jsx(WI,{className:e,children:d}),n&&re.jsx(HI,{children:re.jsx(nS,{size:30})})]})},GI=Fe.div`
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100%;
-`,aS=({text:e})=>re.jsx(HI,{children:re.jsx("p",{children:e})}),GI=Fe.div`
+`,aS=({text:e})=>re.jsx(GI,{children:re.jsx("p",{children:e})}),QI=Fe.div`
   height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 20px;
   padding: 20px;
-`,QI=Fe.div`
+`,VI=Fe.div`
   width: 100%;
   display: flex;
   align-items: center;
   gap: 10px;
   max-width: 500px;
-`,VI=Fe(_I)`
+`,KI=Fe(_I)`
   flex: 1;
-`,KI=Fe(uS)`
+`,YI=Fe(uS)`
   max-width: 1200px;
-`,YI=()=>{const{thumbnails:e,fetchNext:t,searchText:n,changeSearchText:i,status:o,toggleFavorite:u,next:s,error:c}=lS(),d=Cw(),g=j.useCallback(T=>{i(T)},[i]),m=j.useCallback(async()=>{o!=="loading"&&await t()},[t,o]),y=j.useCallback(()=>{d("/favorites")},[d]),_=j.useCallback(T=>{u(T)},[u]);return re.jsxs(GI,{children:[re.jsxs(QI,{children:[re.jsx(VI,{placeholder:"Search...",value:n,onChange:g,loading:o==="loading"}),re.jsx(Ip,{icon:oS,onClick:y})]}),o!=="error"&&e.length>0&&re.jsx(KI,{thumbnails:e,onScrollEnd:m,loading:o==="loading"&&s!==null,onFavoriteClick:_}),o==="error"&&re.jsx(aS,{text:c&&c.statusCode===404?"Data not found":"Oops! Something was wrong"})]})},sS=dI`
+`,XI=()=>{const{thumbnails:e,fetchNext:t,searchText:n,changeSearchText:i,status:o,toggleFavorite:u,next:s,error:c}=lS(),d=Cw(),g=j.useCallback(T=>{i(T)},[i]),m=j.useCallback(async()=>{o!=="loading"&&await t()},[t,o]),y=j.useCallback(()=>{d("/favorites")},[d]),_=j.useCallback(T=>{u(T)},[u]);return re.jsxs(QI,{children:[re.jsxs(VI,{children:[re.jsx(KI,{placeholder:"Search...",value:n,onChange:g,loading:o==="loading"}),re.jsx(Ip,{icon:oS,onClick:y})]}),o!=="error"&&e.length>0&&re.jsx(YI,{thumbnails:e,onScrollEnd:m,loading:o==="loading"&&s!==null,onFavoriteClick:_}),o==="error"&&re.jsx(aS,{text:c&&c.statusCode===404?"Data not found":"Oops! Something was wrong"})]})},sS=dI`
   html {
     box-sizing: border-box;
     font-size: 16px;
@@ -279,36 +279,36 @@ function print() { __p += __j.call(arguments, '') }
     color: inherit;
     background-color: inherit;
   }
-`,XI=()=>re.jsxs(re.Fragment,{children:[re.jsx(sS,{}),re.jsx(YL,{})]}),ZI=Fe.div`
+`,ZI=()=>re.jsxs(re.Fragment,{children:[re.jsx(sS,{}),re.jsx(YL,{})]}),qI=Fe.div`
   height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 10px;
-`,qI=Fe.p`
+`,bI=Fe.p`
   font-size: 2rem;
   margin: 0;
-`,bI=Fe.p`
+`,JI=Fe.p`
   font-size: 3rem;
   margin: 0;
-`,JI=()=>re.jsxs(re.Fragment,{children:[re.jsx(sS,{}),re.jsxs(ZI,{children:[re.jsx(qI,{children:"Page not found"}),re.jsx(bI,{children:"¯\\_(ツ)_/¯"})]})]}),e2="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAACXBIWXMAAAsTAAALEwEAmpwYAAABaElEQVR4nO3dPUrGUBhE4XeF/jFDCl27ICKKLkFBUazks75H73kgRbohhyRVyIwkSZIkabXLmXmcmZeZyeoxuztm5nVm3r+P59WDdnb8iPF5PK0etavjRIzP86vVw3bUEzHeZuZ69bAd1RgcNQZHjcFRY3DUGBw1BkeNwVFjcNQYHDUGR43BUWNw1BgcNQZHjcFRY3DUGBw1BkeNwVFjcNQYHDUGR43BUWNw1BgcNQZHjcFRY3DUGBw1BocxQIwBYgwQY4AYA+Tilw8sj9XDdnVvDBaDwPjIAsov34bfrB62M6MAGQXIKEBGAYovep4YhSdG4YlReGIUnhiFJ0bhiVF4YhSeGIUnRuGJUXhiFJ4YhSdG4YlReGIUnhiFJ0bhiVF4YhSeGIUnRuGJUXhiFJ4YhSdG4YlReGIUnhiFJ0b5Oz8nPl89bGfHiSh3q0ft7vgR5WH1IM3XY+r2++4484JIkiRJmn/uA1iEzqa3s/RjAAAAAElFTkSuQmCC",t2=Fe.div`
+`,e2=()=>re.jsxs(re.Fragment,{children:[re.jsx(sS,{}),re.jsxs(qI,{children:[re.jsx(bI,{children:"Page not found"}),re.jsx(JI,{children:"¯\\_(ツ)_/¯"})]})]}),t2="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAACXBIWXMAAAsTAAALEwEAmpwYAAABaElEQVR4nO3dPUrGUBhE4XeF/jFDCl27ICKKLkFBUazks75H73kgRbohhyRVyIwkSZIkabXLmXmcmZeZyeoxuztm5nVm3r+P59WDdnb8iPF5PK0etavjRIzP86vVw3bUEzHeZuZ69bAd1RgcNQZHjcFRY3DUGBw1BkeNwVFjcNQYHDUGR43BUWNw1BgcNQZHjcFRY3DUGBw1BkeNwVFjcNQYHDUGR43BUWNw1BgcNQZHjcFRY3DUGBw1BocxQIwBYgwQY4AYA+Tilw8sj9XDdnVvDBaDwPjIAsov34bfrB62M6MAGQXIKEBGAYovep4YhSdG4YlReGIUnhiFJ0bhiVF4YhSeGIUnRuGJUXhiFJ4YhSdG4YlReGIUnhiFJ0bhiVF4YhSeGIUnRuGJUXhiFJ4YhSdG4YlReGIUnhiFJ0b5Oz8nPl89bGfHiSh3q0ft7vgR5WH1IM3XY+r2++4484JIkiRJmn/uA1iEzqa3s/RjAAAAAElFTkSuQmCC",n2=Fe.div`
   height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 20px;
   padding: 20px;
-`,n2=Fe.div`
+`,r2=Fe.div`
   width: 100%;
   max-width: 500px;
   display: flex;
   align-items: center;
-`,r2=Fe.h2`
+`,i2=Fe.h2`
   flex: 1;
   font-size: 2rem;
   text-align: center;
   padding-right: 40px;
-`,i2=Fe(uS)`
+`,l2=Fe(uS)`
   max-width: 1200px;
-`,l2=()=>{const{favorites:e,toggleFavorite:t}=lS(),n=Cw(),i=j.useCallback(u=>{t(u)},[t]),o=j.useCallback(()=>{n(-1)},[n]);return re.jsxs(t2,{children:[re.jsxs(n2,{children:[re.jsx(Ip,{icon:e2,onClick:o}),re.jsx(r2,{children:"Favorites"})]}),e.length>0&&re.jsx(i2,{thumbnails:e,onFavoriteClick:i}),e.length===0&&re.jsx(aS,{text:"No favorites found"})]})},o2={palette:{text:"#fff",background:"#121212",input:{hover:"#fff",selected:"#868686"},button:{hover:"#868686",selected:"#fff"}},breakpoints:{tablet:576,desktop:992}},u2=()=>{const e=qL([{path:"/",element:re.jsx(XI,{}),errorElement:re.jsx(JI,{}),children:[{index:!0,element:re.jsx(YI,{})},{path:"favorites",element:re.jsx(l2,{})}]}]);return re.jsx(sI,{theme:o2,children:re.jsx(PI,{children:re.jsx(o4,{router:e})})})};wd.createRoot(document.getElementById("root")).render(re.jsx(wn.StrictMode,{children:re.jsx(u2,{})}));
+`,o2=()=>{const{favorites:e,toggleFavorite:t}=lS(),n=Cw(),i=j.useCallback(u=>{t(u)},[t]),o=j.useCallback(()=>{n(-1)},[n]);return re.jsxs(n2,{children:[re.jsxs(r2,{children:[re.jsx(Ip,{icon:t2,onClick:o}),re.jsx(i2,{children:"Favorites"})]}),e.length>0&&re.jsx(l2,{thumbnails:e,onFavoriteClick:i}),e.length===0&&re.jsx(aS,{text:"No favorites found"})]})},u2={palette:{text:"#fff",background:"#121212",input:{hover:"#fff",selected:"#868686"},button:{hover:"#868686",selected:"#fff"}},breakpoints:{tablet:576,desktop:992}},a2=()=>{const e=qL([{path:"/",element:re.jsx(ZI,{}),errorElement:re.jsx(e2,{}),children:[{index:!0,element:re.jsx(XI,{})},{path:"favorites",element:re.jsx(o2,{})}]}]);return re.jsx(sI,{theme:u2,children:re.jsx(PI,{children:re.jsx(o4,{router:e})})})};wd.createRoot(document.getElementById("root")).render(re.jsx(wn.StrictMode,{children:re.jsx(a2,{})}));
